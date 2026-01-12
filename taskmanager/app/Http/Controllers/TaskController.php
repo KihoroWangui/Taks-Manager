@@ -9,7 +9,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all(); // will fetch tasks from DB later
+        $tasks = Task::all(); 
         return view('tasks.index', compact('tasks'));
     }
 
@@ -49,5 +49,12 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index');
     }
-}
+//toggle method
+    public function toggle(Task $task)
+    {
+        $task->is_completed = !$task->is_completed;
+        $task->save();
 
+        return redirect()->route('tasks.index')->with('success', 'Task status updated!');
+    }
+}
